@@ -1,4 +1,4 @@
-# coding-std
+# coding-styleguide
 
 ## Golang
 
