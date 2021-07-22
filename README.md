@@ -23,7 +23,7 @@ package 可能指向某一项业务，package 目录内是通用的处理框架�
 - job: github.com/go-co-op/gocron
 - redis: TODO
 - mysql: github.com/jinzhu/gorm
-- log: github.com/everFinance/sandy_log
+- log: github.com/inconshreveable/log15
 - test: github.com/stretchr/testify
 
 ### 示例
