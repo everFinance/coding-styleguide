@@ -209,5 +209,5 @@ var ERR_INVALID_SIGNATURE = "err_invalid_signature"
             Txs:   txs,
         })
     ```
-
+- 代码中声明整数类型都使用 int64
 ---
