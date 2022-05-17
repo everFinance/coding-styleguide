@@ -123,5 +123,91 @@ var ERR_INVALID_SIGNATURE = "err_invalid_signature"
 ## 编码规范
 参考 [Uber-go 规范](https://github.com/xxjwxc/uber_go_guide_cn#uber-go-%E8%AF%AD%E8%A8%80%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83)
 
+### 补充
+- 在 demo.go 中原则上只实现三个方法 New(), Run(), Close()
+- 在 **.go 文件中，只有需要被其他文件调用的方法首字符才大写。 
+- 文件中 public 方法统一写在 private 方法之前。   
+  ```go
+  AA(){}
+  BB(){}
+  aa(){}
+  bb(){}
+  ```
+- 方法命令必须为驼峰，并且必须简洁   
+   ```go
+  bad:
+    UpdateBlockChainStableBlock(){}
+  Good:
+    UpdateStableBlock(){}
+  ```
+- 相同属性的传参写到一起，返回值如此
+   ```go
+   AA(ethRpc, moonRpc, cfxRpc string, db *Db) {}
+   ```
+- 存在 error 返回值，error 写在返回值最后一位
+   ```go
+   AA(ethRpc, moonRpc, cfxRpc string, db *Db) (string,int,error) {}
+   ```
+- 函数参数避免指针类型。如果是 slice, map 传参之前可以 copy 一份
+- 避免使用多重 if- else if -else, 请替换成 switch
+- 不要使用闭包，因为你没法控制闭包中调用的外部变量是如何变化
+    ``` 
+    bad:
+        for i:=0; i <10; i ++ {
+            go func() {
+                t.Log(i) // 闭包中的 i 会随着 for 循环改变，最后打印的都是 10
+            }()
+        }
+    good:
+        for i:=0; i <10; i ++ {
+            go func(i int) { // 通过确定性的传参
+                t.Log(i)
+            }(i)
+        }
+    ```
+- 使用 locker.Lock() 之后必须立即声明 defer locker.Unlocker()
+    ```go
+    bad: 
+  func AA() {
+  	locker.Lock()
+      ... 
+  	locker.UnLock()
+     }
+
+  good:
+  func AA() {
+  	locker.Lock()
+  	defer locker.UnLock()
+      ...
+  }
+    ```
+- 尽量避免使用 init() 函数，因为加载 init() 函数中路径不可控，比如 init 中使用到文件相对路径等逻辑。请把 init() 中的处理放在 demo.go/New() 或者 Run() 中。
+- 使用 slice 或者 map，请在 make 的时候指定 cap, 这样 append 的时候会更高效以及节省代码运行时开辟的内存空间。
+  ```go
+  tokenList := make([]severSchema.TokenInfo, 0, 50)
+  ```
+- 正常情况下不会使用到缓冲 channel, 如果必须要使用缓冲 channel, 请备注好为什么 cap 设置为该值。
+- 需要重命名 import package 的时候需要遵循就近原则，本模块的不需要重命名，名字冲突的其他模块命名需要加上模块名。
+    ```go
+    import (
+        confSchema "github.com/everFinance/everpay/config/schema" // config 模块
+        paySchema "github.com/everFinance/everpay/pay/schema" // pay 模块
+        "github.com/everFinance/everpay/server/schema" // 同一模块
+    )
+    ```
+- api 返回结果必须使用 struct 形式
+    ```go
+  bad:
+  c.JSON(http.StatusOK, gin.H{
+		"total": total,
+		"txs": txs,
+	})
+  
+  good:
+    c.JSON(http.StatusOK, schema.RespTxs{
+            Total: total,
+            Txs:   txs,
+        })
+    ```
 
 ---
