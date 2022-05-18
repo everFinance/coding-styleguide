@@ -181,7 +181,7 @@ var ERR_INVALID_SIGNATURE = "err_invalid_signature"
       ...
   }
     ```
-- 尽量避免使用 init() 函数，因为加载 init() 函数中路径不可控，比如 init 中使用到文件相对路径等逻辑。请把 init() 中的处理放在 demo.go/New() 或者 Run() 中。
+- 尽量避免使用 init() 函数，因为加载 init() 函数中路径不可控，并且 init() 中逻辑不显式调用执行。请把 init() 中的处理放在 demo.go/New() 或者 Run() 中。
 - 使用 slice 或者 map，请在 make 的时候指定 cap, 这样 append 的时候会更高效以及节省代码运行时开辟的内存空间。
   ```go
   tokenList := make([]severSchema.TokenInfo, 0, 50)
