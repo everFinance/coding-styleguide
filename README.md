@@ -32,6 +32,7 @@
 - 入口文件一般包含三个外部函数，分别是：New(), Run(), Close()
 - 提交代码之前必须运行 make all 和 make test 并通过之后才能提交
 - 命名风格参考之前的项目进行统一
+- cmd/main.go 中监听 signals 信号之后必须要调用 CLose() 进行安全退出
 
 ## 通用三方库
 - cli: github.com/urfave/cli
