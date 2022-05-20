@@ -15,10 +15,14 @@
     - wdb.go   // 关系型数据库读写方法实现
     - cache.go // 缓存
     - other.go // 独立的处理方法
+- example // 用例
+    - xxx.go
 - .drone.yml // ci/cd 配置文件
 - Dockerfile 
 - README.md // demo 项目 readme
 - mod.go
+- Makefile // make all, make test
+- test.sh
 ```
 ### 基准
 - 每个 package 独立可用，对外接口尽量简洁，最好具备复用性
@@ -26,6 +30,8 @@
 - 入口文件不宜有太多编码
 - 应将外部函数放在入口文件，业务自顶向下实现，入口能表现 package 的核心功能
 - 入口文件一般包含三个外部函数，分别是：New(), Run(), Close()
+- 提交代码之前必须运行 make all 和 make test 并通过之后才能提交
+- 命名风格参考之前的项目进行统一
 
 ## 通用三方库
 - cli: github.com/urfave/cli
