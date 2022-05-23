@@ -24,6 +24,7 @@
 - Makefile // make all, make test
 - test.sh
 ```
+[project-example](./project)
 ### 基准
 - 每个 package 独立可用，对外接口尽量简洁，最好具备复用性
 - package 文件夹名称和里面的入口文件命名一致
