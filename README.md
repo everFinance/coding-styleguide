@@ -7,9 +7,9 @@
     - schema  // type 声明
         - db.go // db 相关的 type 声明
         - api.go // api response type 声明
+		- error.go   // error 信息
         - other.go // 其他模块对应的 type 声明
     - api.go    // restful 接口实现
-    - error.go   // error 信息
     - demo.go   // 入口函数
     - jobs.go   // 定时任务实现
     - wdb.go   // 关系型数据库读写方法实现
