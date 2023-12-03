@@ -68,6 +68,9 @@ If it is a small entrepreneurial project, we recommend using the single applicat
 - data source: druid、c3p0
 - http: OkHttp、Apache HttpClient
 - redis: jedis、redisson
+- config: zookeeper、nacos、apollo
+- MQ: rocketMQ、kafka
+- RPC: dubbo、spring cloud
 
 ## log
 The application cannot directly use the API in the log system (Log4j, Logback), but should rely on the API in the log framework SLF4J, and use the log framework in the facade mode, which is conducive to maintenance and the unity of log processing methods of each class

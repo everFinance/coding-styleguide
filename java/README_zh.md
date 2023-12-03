@@ -68,6 +68,9 @@
 - 数据源: druid、c3p0
 - http: OkHttp、Apache HttpClient
 - redis: jedis、redisson
+- 配置: zookeeper、nacos、apollo
+- MQ: rocketMQ、kafka
+- RPC: dubbo、spring cloud
 
 ## 日志
 应用中不可直接使用日志系统（Log4j、Logback）中的 API，而应依赖使用日志框架 SLF4J 中的 API，使用门面模式的日志框架，有利于维护和各个类的日志处理方式统一
