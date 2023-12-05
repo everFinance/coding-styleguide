@@ -49,7 +49,7 @@ If it is a small entrepreneurial project, we recommend using the single applicat
 
 ![img.png](img.png)
 
-### Benchmarks
+### Application Development Benchmarks
 - Hierarchical architecture, as shown in the figure above, the upper layer depends on the lower layer, and the lower layer shields the processing details of the upper layer, and each layer performs its own duties and separates the concerns
 - Don't add entities if you don't have to. Domain model has high requirements for design ability, and if it is not used well, a wrong abstraction is better than no abstraction
 - Do not rely on SNAPSHOT versions for online applications
@@ -57,20 +57,28 @@ If it is a small entrepreneurial project, we recommend using the single applicat
 - Keep code styles consistent within the same project
 - During system design, the system should rely on abstract classes and interfaces as much as possible according to the dependency inversion principle, which is conducive to expansion and maintenance
 
+### Framework Development Benchmark
+- Modular design, each module is responsible for relatively independent functions, such as network is responsible for network,exception module is responsible for exception processing
+- Consider scalability, abstract interfaces for important modules, provide plug-ins or SPI forms, and facilitate other developers to add extensions later
+- Design robust error handling mechanisms that provide meaningful error information for easy troubleshooting
+- Take into account that users may use different versions of Java and other related libraries to ensure that the framework can run properly in a variety of environments
+- Write adequate unit tests and integration tests to ensure that all parts of the framework are working properly
+- Provide development demo to reduce user access
+
 ## Common Third-party Libraries
 - Application development framework: spring boot
-- Scheduled task: quartz、elastic job、spring task scheduling
-- log: log4j、logback、log4j2
-- test: junit、testng、mockito、spring test
+- Scheduled task: quartz
+- log: log4j2
+- test: mockito
 - arweave sdk: arseedingsdk4j-sdk
 - ethereum sdk: web3j
-- json: jackson、gson、fastjson
-- data source: druid、c3p0
-- http: OkHttp、Apache HttpClient
-- redis: jedis、redisson
-- config: zookeeper、nacos、apollo
-- MQ: rocketMQ、kafka
-- RPC: dubbo、spring cloud
+- json: jackson
+- data source: druid
+- http: OkHttp
+- redis: jedis
+- config: nacos
+- MQ: rocketMQ
+- RPC: spring cloud
 
 ## log
 The application cannot directly use the API in the log system (Log4j, Logback), but should rely on the API in the log framework SLF4J, and use the log framework in the facade mode, which is conducive to maintenance and the unity of log processing methods of each class
@@ -158,6 +166,6 @@ alibaba java coding guidelines written very detailed, here to write some daily d
 - The decimal type is decimal. float and double are prohibited
 - varchar is a variable length character string with a maximum length of 5000. If the stored length exceeds this value, use text and list it independently
 - Three required fields in the table are id, create_time, update_time
-- Do not use count(column name) or count(constant) instead of count(*), count(*) is the syntax for the standard count of rows defined in SQL92, independent of the database, NULL and non-null
+- Do not use count(column name) or count(constant) instead of count(\*), count(*) is the syntax for the standard count of rows defined in SQL92, independent of the database, NULL and non-null
 - If all the values in a column are NULL, count(col) returns 0, but sum(col) returns NULL. Therefore, pay attention to NPE problems when using sum()
   If the -in operation can be avoided, avoid it. If it cannot be avoided, carefully evaluate the number of set elements behind the in operation and control it within 1000

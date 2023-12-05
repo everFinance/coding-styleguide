@@ -49,7 +49,7 @@
 
 ![img.png](img.png)
 
-### 基准
+### 应用开发基准
 - 分层架构,如上图,上层依赖下层,下层对上层屏蔽处理细节,每一层各司其职,分离关注点
 - 如无必要勿增实体. 领域模型对设计能力要求很高,没把握用好,一个错误的抽象还不如不抽象
 - 线上应用不要依赖 SNAPSHOT 版本
@@ -57,20 +57,28 @@
 - 同一个项目中代码风格保持一致
 - 系统设计时,根据依赖倒置原则,尽量依赖抽象类与接口,有利于扩展与维护
 
+### 框架开发基准
+- 模块化设计,每个模块要负责相对独立的功能,如network专门负责网络,exception模块专门负责异常处理
+- 考虑可扩展性,对重要模块抽象接口,提供插件或者SPI的形式,方便后续其他开发者添加扩展
+- 设计健壮的错误处理机制,提供有意义的错误信息,方便用户排查问题
+- 考虑到用户可能使用不同版本的Java和其他相关库,确保框架能够在多种环境下正常运行
+- 编写充分的单元测试和集成测试,确保框架的各个部分都能正常工作
+- 提供开发demo, 减低用户使用门槛
+
 ## 通用三方库
 - 应用开发框架: spring boot
-- 定时任务: quartz、elastic job、spring task scheduling
-- 日志: log4j、logback、log4j2
-- 测试: junit、testng、mockito、spring test
+- 定时任务: quartz
+- 日志: log4j2
+- 测试: mockito
 - arweave sdk: arseedingsdk4j-sdk
 - ethereum sdk: web3j
-- json: jackson、gson、fastjson
-- 数据源: druid、c3p0
-- http: OkHttp、Apache HttpClient
-- redis: jedis、redisson
-- 配置: zookeeper、nacos、apollo
-- MQ: rocketMQ、kafka
-- RPC: dubbo、spring cloud
+- json: jackson
+- 数据源: druid
+- http: OkHttp
+- redis: jedis
+- 配置: nacos
+- MQ: rocketMQ
+- RPC: spring cloud
 
 ## 日志
 应用中不可直接使用日志系统（Log4j、Logback）中的 API，而应依赖使用日志框架 SLF4J 中的 API，使用门面模式的日志框架，有利于维护和各个类的日志处理方式统一
@@ -155,6 +163,6 @@ if (logger.isDebugEnabled()) {
 - 小数类型为decimal，禁止使用float和double
 - varchar为变长字符串，长度不要超过5000，如果存储长度超过该值，使用text，并独立表出来
 - 表必备三字段：id, create_time, update_time
-- 不要使用count(列名)或count(常量)来替代count(*)，count(*)是SQL92定义的标 准统计行数的语法，跟数据库无关，跟NULL和非 NULL无关
+- 不要使用count(列名)或count(常量)来替代count(\*)，count(*)是SQL92定义的标 准统计行数的语法，跟数据库无关，跟NULL和非 NULL无关
 - 当某一列的值全是NULL时，count(col)的返回结果为0，但 sum(col)的返回结果为 NULL，因此使用sum()时需注意NPE问题
 - in操作能避免则避免，若实在避免不了，需要仔细评估 in后边的集合元素数量，控制在1000个之内
